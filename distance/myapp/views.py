@@ -55,14 +55,17 @@ def calculate_fare(request):
               'Delhi, India']
 
    if request.method == 'POST':
-       source = request.POST.get('source')
-       destination = request.POST.get('destination')
-       date = request.POST.get('date')
-       time = request.POST.get('time')
+       source = request.POST.getlist('source')
+       destination = request.POST.getlist('destination')
+       date = request.POST.getlist('date')
+       time = request.POST.getlist('time')
        per_km_price = 10  # Change this value according to your requirement
+
 
        distance = calculate_distance(source, destination)
        toll_tax = distance
+
+
 
        base_fare = distance * per_km_price + toll_tax
 
@@ -100,7 +103,7 @@ def calculate_fare(request):
           'time': time,
           'gst': gst,
           'base_fare': base_fare,
-           'dis_fare':dis_fare
+          'dis_fare':dis_fare
        }
 
 
@@ -154,6 +157,7 @@ def CAB_DETAIL(request):
     date = request.session.get('date')
     time = request.session.get('time')
     gst = request.session.get('gst')
+    base_fare = request.session.get('base_fare')
 
 
     context = {
@@ -163,7 +167,8 @@ def CAB_DETAIL(request):
         'total_fare': total_fare,
         'date': date,
         'time': time,
-        'gst': gst
+        'gst': gst,
+        'base_fare': base_fare
     }
 
     return render(request, 'cab-detail.html',context)
@@ -178,12 +183,14 @@ def CAB_BOOKING(request):
         mobile = request.POST.get('mobile')
         altmobile = request.POST.get('altmobile')
         gst = request.POST.get('gst')
-        remark = request.POST.get('remark')
+
         pickup_city = request.POST.get('pickup_city')
         drop_city = request.POST.get('drop_city')
+        selected_option = request.POST.get('discountOptions')
 
-        en = booking(name=name, email=email, pickup_city=pickup_city, drop_city=drop_city, mobile=mobile, gst=gst, pickup_address=pickup_address, drop_address=drop_address, altmobile=altmobile, remark=remark)
+        en = booking(name=name, email=email, pickup_city=pickup_city, drop_city=drop_city, mobile=mobile, gst=gst, pickup_address=pickup_address, drop_address=drop_address, altmobile=altmobile)
         en.save()
+
 
 
 
@@ -193,6 +200,22 @@ def CAB_BOOKING(request):
     total_fare = request.session.get('total_fare')
     date = request.session.get('date')
     time = request.session.get('time')
+
+
+    total_payment = total_fare
+    payment_amount = 0
+
+    if selected_option == 'option1':
+        payment_amount = total_payment * 0.2
+    elif selected_option == 'option2':
+        payment_amount = total_payment
+    else:
+        payment_amount = 0
+
+    payment_amount = math.ceil(payment_amount)
+
+
+    rem_amount = total_payment - payment_amount
 
     context = {
         'source': source,
@@ -205,7 +228,9 @@ def CAB_BOOKING(request):
         'mobile': mobile,
         'email': email,
         'pickup_address': pickup_address,
-        'drop_address': drop_address
+        'drop_address': drop_address,
+        'payment_amount': payment_amount,
+        'rem_amount': rem_amount
     }
 
     return render(request, 'cab-booking.html', context)
@@ -214,6 +239,20 @@ def CAB_BOOKING(request):
 def CONFIRM(request):
    return render(request, 'confirm.html')
 
+
+
+def REGISTER(request):
+   return render(request, 'register.html')
+
+
+
+def LOGIN(request):
+   return render(request, 'login.html')
+
+
+
+def PASSWORD(request):
+   return render(request, 'forgot-password.html')
 
 
 

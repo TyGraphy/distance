@@ -41,12 +41,12 @@ Main Content START -->
 									<div class="row">
 										<div class="col-md-6">
 											<small>Pickup city</small>
-											<p class="h6 fw-light mb-md-0">{{source}}</p>
+											<p class="h6 fw-light mb-md-0">{{source|join:" "}}</p>
 										</div>
 
 										<div class="col-md-6">
 											<small>Drop city</small>
-											<p class="h6 fw-light mb-0">{{destination}}</p>
+											<p class="h6 fw-light mb-0">{{destination|join:" "}}</p>
 										</div>
 										<div class="col-md-6">
 											<small>Pickup Address</small>
@@ -61,7 +61,7 @@ Main Content START -->
 
 								<div class="col-md-6">
 									<ul class="list-group list-group-borderless">
-										<li class="list-group-item">Journey Date:<span class="h6 fw-normal mb-0 ms-1">{{date}}</span></li>
+										<li class="list-group-item">Journey Date:<span class="h6 fw-normal mb-0 ms-1">{{date|join:" "}}</span></li>
 										<li class="list-group-item">Distance:<span class="h6 fw-normal mb-0 ms-1">{{distance}}</span></li>
 									</ul>
 								</div>
@@ -75,87 +75,40 @@ Main Content START -->
 							</div>
 
 							<!-- Title -->
-							<h6 class="mb-0 mt-3">Passenger Detail</h6>
+							<h6 class="mb-0 mt-3">Traveller Detail</h6>
 
 							<div class="row">
 								<!-- List -->
 								<div class="col-sm-8">
 									<ul class="list-group list-group-borderless mb-0">
-										<li class="list-group-item">Passenger Name:<span class="h6 mb-0 fw-normal ms-1">{{name}}</span></li>
-										<li class="list-group-item">Passenger Email:<span class="h6 mb-0 fw-normal ms-1">{{email}}</span></li>
-										<li class="list-group-item">Passenger Number:<span class="h6 mb-0 fw-normal ms-1">{{mobile}}</span></li>
+										<li class="list-group-item">Name:<span class="h6 mb-0 fw-normal ms-1">{{name}}</span></li>
+										<li class="list-group-item">Email:<span class="h6 mb-0 fw-normal ms-1">{{email}}</span></li>
+										<li class="list-group-item">Number:<span class="h6 mb-0 fw-normal ms-1">{{mobile}}</span></li>
 									</ul>
 								</div>
 
 								<!-- Price -->
 								<div class="col-sm-4 text-sm-end mt-3 mt-sm-auto">
 									<h6 class="mb-1 fw-normal">Total Amount</h6>
-									<h2 class="mb-0 text-success">₹ {{total_fare}}</h2>
+									<h6 class="mb-0 text-success">₹ {{ total_fare }}</h6>
+									<h6 class="mb-1 fw-normal">Total payable Amount</h6>
+									<h6 class="mb-0 text-success">₹ {{ payment_amount }}</h6>
+									<h6 class="mb-1 fw-normal">Remaining Amount</h6>
+									<h6 class="mb-0 text-danger">₹ {{rem_amount}}</h6>
 								</div>
 							</div>
+							<div class="col-12" >
+						<button  class="btn btn-primary mb-0" style="float:right;">Pay Now</button>
+					</div>
 						</div>
 						<!-- Card body END -->
+
+
 					</div>
 					<!-- Booking summary END -->
 
-					<!-- Payment START -->
-					<div class="card shadow">
-						<!-- card header -->
-						<div class="card-header border-bottom p-4">
-							<h4 class="mb-0">How would you like to pay?</h4>
-						</div>
 
-						<!-- Card body -->
-						<div class="card-body p-4">
-							<!-- Card options -->
-							<div class="d-sm-flex align-items-center mb-3">
-								<h6 class="mb-2 mb-sm-0">We Accept:</h6>
-								<ul class="list-inline my-0 ms-sm-3">
-									<li class="list-inline-item"> <a href="#"><img src="{% static 'assets/images/element/visa.svg' %}" class="h-30px" alt=""></a></li>
-									<li class="list-inline-item"> <a href="#"><img src="{% static 'assets/images/element/mastercard.svg' %}" class="h-30px" alt=""></a></li>
-									<li class="list-inline-item"> <a href="#"><img src="{% static 'assets/images/element/expresscard.svg' %}" class="h-30px" alt=""></a></li>
-								</ul>
-							</div>
 
-							<!-- Form START -->
-							<form action="{% url 'confirm' %}" class="row g-3">
-								<!-- Card number -->
-								<div class="col-12">
-									<label class="form-label">Card Number</label>
-									<div class="position-relative">
-										<input type="text" class="form-control" maxlength="14" placeholder="XXXX XXXX XXXX XXXX">
-										<img src="{% static 'assets/images/element/visa.svg' %}" class="w-30px position-absolute top-50 end-0 translate-middle-y me-2 d-none d-sm-block" alt="">
-									</div>
-								</div>
-								<!-- Expiration Date -->
-								<div class="col-md-6">
-									<label class="form-label">Expiration Date</label>
-									<div class="input-group">
-										<input type="text" class="form-control" maxlength="2" placeholder="Month">
-										<input type="text" class="form-control" maxlength="4" placeholder="Year">
-									</div>
-								</div>
-								<!--Cvv code  -->
-								<div class="col-md-6">
-									<label class="form-label">CVV / CVC</label>
-									<input type="text" class="form-control" maxlength="3" placeholder="XXXX">
-								</div>
-								<!-- Card name -->
-								<div class="col-12">
-									<label class="form-label">Name on Card</label>
-									<input type="text" class="form-control" placeholder="Enter card holder name">
-								</div>
-
-								<!-- Buttons -->
-								<div class="col-12">
-									<button  class="btn btn-primary mb-0">Pay Now</button>
-								</div>
-							</form>
-							<!-- Form END -->
-						</div>
-					</div>
-					<!-- Payment END -->
-				</div>
 			</div>
 		</div>
 	</div>

@@ -15,6 +15,9 @@ urlpatterns = [
     path('cab-booking/', views.CAB_BOOKING, name='cab-booking'),
     path('confirm/', views.CONFIRM, name='confirm'),
     path('calculate-fare/', views.calculate_fare, name='calculate-fare'),
+    path('register/', views.REGISTER, name='register'),
+    path('login/', views.LOGIN, name='login'),
+    path('for-password/', views.PASSWORD, name='password'),
 
 
 

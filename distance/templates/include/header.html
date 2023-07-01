@@ -9,8 +9,8 @@
 		<div class="container">
 			<!-- Logo START -->
 			<a class="navbar-brand" href="index.html">
-				<img class="light-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo">
-				<img class="dark-mode-item navbar-brand-item" src="assets/images/logo-light.svg" alt="logo">
+				<img class="light-mode-item navbar-brand-item" src="{% static 'assets/images/logo3.svg' %}" alt="logo">
+				<img class="dark-mode-item navbar-brand-item" src="{% static 'assets/images/logo3.svg' %}" alt="logo">
 			</a>
 			<!-- Logo END -->
 
@@ -20,10 +20,9 @@
 				<!-- Download app -->
 				<li class="nav-item align-items-center d-none d-sm-flex position-relative me-sm-3">
 					<!-- Icon -->
-					<a href="#" class="icon-md btn btn-light mb-0 p-0 flex-shrink-0"><i class="bi bi-cloud-download-fill"></i></a>
+					<a href="#" class="icon-md btn btn-light mb-0 p-0 flex-shrink-0"><i class="bi bi-whatsapp"></i></a>
 					<div class="ms-2 d-none d-md-block">
-						<h6 class="mb-0"><a href="#" class="stretched-link">Download the app</a></h6>
-						<p class="small mb-0 text-body">Get exciting welcome offers</p>
+						<h6 class="mb-0"><a href="tel:+91-1234567890" class="stretched-link">+91-1234567890</a></h6>
 					</div>
 				</li>
 
@@ -43,7 +42,7 @@
 
 				<!-- Login button START -->
 				<li class="nav-item ms-3">
-					<a href="sign-up.html" class="btn btn-sm btn-primary mb-0"><i class="fa-solid fa-right-to-bracket me-2"></i>Sign up</a>
+					<a href="{% url 'register' %}" class="btn btn-sm btn-primary mb-0"><i class="fa-solid fa-right-to-bracket me-2"></i>Sign up</a>
 				</li>
 				<!-- Login button END -->
 			</ul>

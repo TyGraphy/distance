@@ -482,8 +482,8 @@ var e = {
 
     // START: 10 Choices
     choicesSelect: function () {
-       var choice = e.select('.js-choice');
-       
+      var choice = e.select('.js-choice');
+
        if (e.isVariableDefined(choice)) {
          var element = document.querySelectorAll('.js-choice');
 
@@ -507,6 +507,10 @@ var e = {
        }
     },
     // END: Choices
+
+
+
+
 
     // START: 11 AOS Animation
     aosFunc: function () {
