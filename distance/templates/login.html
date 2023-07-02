@@ -121,7 +121,7 @@ Main Content START -->
 								<p class="mb-0">New here?<a href="{% url 'register' %}"> Create an account</a></p>
 
 								<!-- Form START -->
-								<form class="mt-4 text-start">
+								<form class="mt-4 text-start" action="{% url 'profile' %}">
 									<!-- Email -->
 									<div class="mb-3">
 										<label class="form-label">Enter email id</label>
@@ -144,7 +144,9 @@ Main Content START -->
 										<a href="{% url 'password' %}">Forgot password?</a>
 									</div>
 									<!-- Button -->
-									<div><button type="submit" class="btn btn-primary w-100 mb-0">Login</button></div>
+									<div>
+										<button type="submit" class="btn btn-primary w-100 mb-0">Login</button>
+									</div>
 
 									<!-- Divider -->
 									<div class="position-relative my-4">

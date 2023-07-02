@@ -255,6 +255,10 @@ def PASSWORD(request):
    return render(request, 'forgot-password.html')
 
 
+def PROFILE(request):
+   return render(request, 'profile.html')
+
+
 
 
 
