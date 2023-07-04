@@ -29,8 +29,24 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',
     'django_flatpickr',
+    'rest_framework'
 
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,5 +141,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-SID = 'ACfd5783abbb8cb4fe571e844c71933448'
-AUTH_TOKEN = 'bf89f253a8c78bb3d0d2c493b0d22df7'
+AUTH_USER_MODEL = 'myapp.User'

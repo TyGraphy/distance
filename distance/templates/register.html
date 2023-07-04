@@ -120,8 +120,11 @@ Main Content START -->
 								<p class="mb-0">Already a member?<a href="{% url 'login' %}"> Log in</a></p>
 		
 								<!-- Form START -->
-								<form class="mt-4 text-start" method="post">
-									{% csrf_token %}
+								<form class="mt-4 text-start" method="post" action="{% url 'otp' %}">
+									 {% csrf_token %}
+                                      {% if error %}
+									   <p style="color: red;">{{ error }}</p>
+                                       {% endif %}
 									<!-- Email -->
 									<div class="mb-3">
 										<label class="form-label">Enter Name</label>
@@ -129,7 +132,7 @@ Main Content START -->
 									</div>
 									<div class="mb-3">
 										<label class="form-label">Enter Number</label>
-										<input  class="form-control" type="number">
+										<input  class="form-control" type="number" id="mobile_number" name="mobile_number">
 									</div>
 									<div class="mb-3">
 										<label class="form-label">Enter Email</label>

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from myapp import views
 
 
@@ -15,11 +15,12 @@ urlpatterns = [
     path('cab-booking/', views.CAB_BOOKING, name='cab-booking'),
     path('confirm/', views.CONFIRM, name='confirm'),
     path('calculate-fare/', views.calculate_fare, name='calculate-fare'),
-    path('register/', views.REGISTER, name='register'),
+
     path('login/', views.LOGIN, name='login'),
     path('for-password/', views.PASSWORD, name='password'),
     path('profile/', views.PROFILE, name='profile'),
-    path('otp/<uid>/', views.otp, name= 'otp'),
+    path('', include('myapp.urls')),
+
 
 
 
