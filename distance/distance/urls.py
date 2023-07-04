@@ -19,6 +19,7 @@ urlpatterns = [
     path('login/', views.LOGIN, name='login'),
     path('for-password/', views.PASSWORD, name='password'),
     path('profile/', views.PROFILE, name='profile'),
+    path('otp/<uid>/', views.otp, name= 'otp'),
 
 
 

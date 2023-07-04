@@ -99,3 +99,12 @@ class booking(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    phone_number = models.CharField(max_length=100)
+    otp = models.CharField(max_length=100, null=True, blank=True)
+    uid = models.UUIDField(default=uuid.uuid4, null=True, blank=True)
