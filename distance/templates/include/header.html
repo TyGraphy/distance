@@ -1,4 +1,6 @@
+
 {% load static %}
+
 
 <body>
 
@@ -42,111 +44,18 @@
 
 				<!-- Login button START -->
 				<li class="nav-item ms-3">
-					<button class="btn btn-sm btn-primary mb-0" data-bs-target="#Login" data-bs-toggle="modal"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</button>
+					<a class="btn btn-sm btn-primary mb-0" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</a>
 				</li>
 				<!-- Login button END -->
 			</ul>
 			<!-- Buttons START -->
+
 		</div>
+
 	</nav>
 	<!-- Logo Nav END -->
 
-
-
-
-
 </header>
-<!-- Header END -->
-
-<!----------POPUP---------->
-<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="Login" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-			  <ul style="list-style:none; padding:0;">
-			       <li style="float:right;"><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button></li>
-                   <li><label class="col-form-label"><h5>Email</h5></label></li>
-                   <li><input class="form-control" placeholder="Enter your Email" type="text"></li>
-			       <li><label class="col-form-label"><h5>Password</h5></label></li>
-                   <li><input class="form-control" placeholder="Enter your Password" type="text"></li>
-				   <li><button class="btn btn-secondary" data-bs-target="#Forgot" data-bs-toggle="modal" type="button">Forgot Password</button></li>
-			  </ul>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-target="#Register" data-bs-toggle="modal" type="button">Register</button>
-        <a class="btn btn-primary" href="" type="button">Login</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<!--------------------------Register--------------------->
-<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="Register" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-			  <ul style="list-style:none; padding:0;">
-			       <li style="float:right;"><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button></li>
-                   <li><label class="col-form-label"><h5>Name</h5></label></li>
-                   <li><input class="form-control" placeholder="Enter your Name" type="text"></li>
-			       <li><label class="col-form-label"><h5>Number</h5></label></li>
-                   <li><input class="form-control" placeholder="Enter your Number" type="text"></li>
-				  <li><label class="col-form-label"><h5>Email</h5></label></li>
-                   <li><input class="form-control" placeholder="Enter your Email" type="text"></li>
-				  <li><label class="col-form-label"><h5>Password</h5></label></li>
-                   <li><input class="form-control" placeholder="Enter your Password" type="text"></li>
-				  <li><label class="col-form-label"><h5>Confirm Password</h5></label></li>
-                   <li><input class="form-control" placeholder="Confirm Password" type="text"></li>
-			  </ul>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
-        <a class="btn btn-primary" href="" type="button">Register</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-<!--------------------------------------------Forgot Password------------------------------------------->
-<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="Forgot" tabindex="-1">
-	<div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-			  <ul style="list-style:none; padding:0;">
-			<li style="float:right;"><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button></li>
-            <li><label class="col-form-label"><h6>Email</h6></label></li>
-            <li><input class="form-control" placeholder="Enter Your Email" type="text"></li>
-			  </ul>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
-        <a class="btn btn-primary" href="" type="button">Reset Password</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 
 
