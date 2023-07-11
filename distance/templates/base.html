@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 	<!-- Dark mode -->
 	<script>
@@ -74,6 +75,27 @@
 
 	</script>
 
+<script>
+$(document).ready(function() {
+  // Target the radio buttons with the class 'payment-option'
+  $('.payment-option').change(function() {
+    // Get the selected radio button value
+    var selectedOption = $('input[name="discountOptions"]:checked').val();
+
+    // Update the prices based on the selected option
+    if (selectedOption === 'option1') {
+      $('#price-container').find('.text-success').text('₹ {{ payment_amount }}');
+      $('#price-container').find('.text-danger').text('₹ {{ rem_amount }}');
+    } else if (selectedOption === 'option2') {
+      $('#price-container').find('.text-success').text('₹ {{ total_fare }}');
+      $('#price-container').find('.text-danger').text('₹ {{ rem_amount }}');
+    } else if (selectedOption === 'option3') {
+      $('#price-container').find('.text-success').text('₹ {{ total_fare }}');
+      $('#price-container').find('.text-danger').text('₹ {{ rem_amount }}');
+    }
+  });
+});
+</script>
 
 	<!-- Google place api -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX0OjsvGZFaLvdaYyOvaWvRmSpnEqVNIo&libraries=places"></script>
@@ -201,6 +223,9 @@
             format: 'hh:mm a'
         });
 </script>
+
+
+
 
 </html>
 

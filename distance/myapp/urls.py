@@ -1,8 +1,8 @@
-from django.urls import path
-from .views import OTPView, OTPVerificationView, UserListAPIView
+#from django.urls import path
+#from .views import OTPView, OTPVerificationView, UserListAPIView
 
-urlpatterns = [
-    path('register/', OTPView.as_view(), name='otp'),
-    path('otp-verification/', OTPVerificationView.as_view(), name='otp_verification'),
-    path('users/', UserListAPIView.as_view(), name='user_list'),
-]
+#urlpatterns = [
+  #  path('register/', OTPView.as_view(), name='otp'),
+   # path('otp-verification/', OTPVerificationView.as_view(), name='otp_verification'),
+   # path('users/', UserListAPIView.as_view(), name='user_list'),
+#]

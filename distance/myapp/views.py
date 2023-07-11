@@ -4,14 +4,21 @@ from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 import googlemaps
 import math
+from django.contrib.auth.decorators import login_required
 from myapp.models import booking
 from django.views import View
+from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+
 from rest_framework import status
 from .models import User
 from .serializers import UserSerializer
 import requests
+from django.shortcuts import get_object_or_404
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 
 
 
@@ -158,6 +165,53 @@ def CAB_DETAIL(request):
 
     return render(request, 'cab-detail.html',context)
 
+def REGISTER(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        mobile = request.POST.get('mobile')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        if User.objects.filter(mobile=mobile).exists():
+            messages.error(request, 'mobile is already exists')
+            return redirect('login')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'email id is already exists')
+            return redirect('login')
+
+        user = User(
+            mobile=mobile,
+            email=email,
+            username=username,
+
+        )
+        user.set_password(password)
+        user.save()
+        return redirect('login')
+    return render(request, 'register.html')
+
+
+
+def LOGIN(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        else:
+            messages.error(request, 'Email or Password are Invalid !')
+            return redirect('login')
+
+    return render(request, 'login.html')
+
+
+
+
+
 
 def CAB_BOOKING(request):
     if request.method == "POST":
@@ -165,18 +219,22 @@ def CAB_BOOKING(request):
         drop_address = request.POST.get('drop_address')
         name = request.POST.get('name')
         email = request.POST.get('email')
-        mobile = request.POST.get('mobile')
-
-
+        mobile_b = request.POST.get('mobile_b')
         pickup_city = request.POST.get('pickup_city')
         drop_city = request.POST.get('drop_city')
         selected_option = request.POST.get('discountOptions')
 
-        en = booking(name=name, email=email, pickup_city=pickup_city, drop_city=drop_city, mobile=mobile, pickup_address=pickup_address, drop_address=drop_address)
+        en = booking(
+
+            name=name,
+            email=email,
+            mobile_b=mobile_b,  # Assuming mobile_number is the field in the User model
+            pickup_city=pickup_city,
+            drop_city=drop_city,
+            pickup_address=pickup_address,
+            drop_address=drop_address
+        )
         en.save()
-
-
-
 
     source = request.session.get('source')
     destination = request.session.get('destination')
@@ -209,10 +267,11 @@ def CAB_BOOKING(request):
         'date': date,
         'time': time,
         'name': name,
-        'mobile': mobile,
+        'mobile_b': mobile_b,
         'email': email,
         'pickup_address': pickup_address,
         'drop_address': drop_address,
+        'total_fare': total_fare,
         'payment_amount': payment_amount,
         'rem_amount': rem_amount
     }
@@ -226,13 +285,7 @@ def CONFIRM(request):
 
 
 
-def REGISTER(request):
-    return render(request, 'register.html')
 
-
-
-def LOGIN(request):
-    return render(request, 'login.html')
 
 
 
@@ -249,63 +302,13 @@ def PROFILE(request):
 def otp(request):
     return render(request, 'otp.html')
 
+def logout_view(request):
+    logout(request)
+    return render(request, 'index.html')
 
 
 
 
-
-
-
-
-
-class OTPView(View):
-    def get(self, request):
-        return render(request, 'register.html')
-
-    def post(self, request):
-        mobile_number = request.POST.get('mobile_number')  # Specify the desired mobile number here
-        otp = random.randint(100000, 999999)  # Generate OTP here or use a library like `pyotp`
-
-        user, _ = User.objects.get_or_create(mobile_number=mobile_number)
-        user.otp = otp
-        user.save()
-
-        # Send OTP via 2Factor.in API
-        api_key = '2d1d5168-1bb8-11ee-addf-0200cd936042'  # Replace with your 2Factor.in API key
-        url = f"https://2factor.in/API/V1/{api_key}/SMS/{mobile_number}/{otp}/OTP+is+{otp}"
-        response = requests.get(url)
-
-        if response.status_code == 200:
-            return render(request, 'otp_verification.html', {'mobile_number': mobile_number})
-        else:
-            return render(request, 'otp_form.html', {'error': 'Failed to send OTP'})
-
-
-class OTPVerificationView(View):
-    def post(self, request):
-        mobile_number = request.POST.get('mobile_number')  # Specify the desired mobile number here
-        otp = request.POST.get('otp')
-
-        try:
-            user = User.objects.get(mobile_number=mobile_number, otp=otp)
-            # Perform further authentication or login logic here
-            return render(request, 'success.html')
-        except User.DoesNotExist:
-            return render(request, 'otp_verification.html', {'mobile_number': mobile_number, 'error': 'Invalid OTP'})
-
-
-class UserListAPIView(APIView):
-    def get(self, request):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

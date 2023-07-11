@@ -46,9 +46,7 @@ Main Content START -->
                             <!-- Card body START -->
                             <div class="card-body">
                                 <!-- Form START -->
-                                <form class="row g-4"
-                                    action="{% url 'cab-booking' %}"
-                                    method="post">
+                                <form class="row g-4" action="{% url 'cab-booking' %}" method="post">
 
                                     <!-- Input -->
 
@@ -70,7 +68,20 @@ Main Content START -->
                                     <div class="col-md-6">
                                         <div class="form-control-bg-light">
                                             <label class="form-label required" style="font-weight: bolder;">Mobile number</label>
-                                            <input style="font-style:italic" name="mobile" id="mobile" type="text" class="form-control form-control-lg" placeholder="Enter your mobile number" required>
+                                            <input style="font-style:italic" name="mobile_b" id="mobile_b" type="text" class="form-control form-control-lg" placeholder="Enter your mobile number" required>
+                                        </div>
+                                    </div>
+                                           <div class="col-md-6">
+                                        <div class="form-control-bg-light">
+                                            <label class="form-label required" style="font-weight: bolder;">Email (Your E-ticket will be sent here)</label>
+                                            <input style="font-style:italic" name="email" id="email" type="email" class="form-control form-control-lg" placeholder="Enter your email" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-control-bg-light">
+                                            <label class="form-label required" style="font-weight: bolder;">WhatsApp number</label>
+                                            <input style="font-style:italic" id="altmobile" name="altmobile" class="form-control form-control-lg" placeholder="Fill with country code" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -88,26 +99,30 @@ Main Content START -->
                                             <input style="font-style:italic" name="drop_address" id="drop_address" type="text" class="form-control form-control-lg" placeholder="Enter drop address" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-control-bg-light">
-                                            <label class="form-label required" style="font-weight: bolder;">Email (Your E-ticket will be sent here)</label>
-                                            <input style="font-style:italic" name="email" id="email" type="email" class="form-control form-control-lg" placeholder="Enter your email" required>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-control-bg-light">
-                                            <label class="form-label required" style="font-weight: bolder;">WhatsApp number</label>
-                                            <input style="font-style:italic" id="altmobile" name="altmobile" class="form-control form-control-lg" placeholder="Fill with country code" required>
-                                        </div>
-                                    </div>
 
 
                                     <div class="form-check form-check-inline mb-1">
                                         <input class="form-check-input" type="checkbox">
-                                        <label class="form-check-label h6 fw-normal mb-0" for="discount1">Send me trip details on WhatsApp</label>
+                                        <label class="form-check-label h6 fw-normal mb-0">Send me trip details on WhatsApp</label>
                                     </div>
                                     <!-- Form END -->
+                                    <div class="card-footer pt-4">
+                                        <a class="btn-more d-flex align-items-center collapsed p-0 mb-0" data-bs-toggle="collapse" href="#flightDetail" role="button" aria-expanded="false" aria-controls="flightDetail">
+										Flight detail<i class="fa-solid fa-angle-down ms-2"></i>
+									</a>
+                             <div class="multi-collapse collapse" id="flightDetail">
+								<!-- Tabs START -->
+								<ul class="nav nav-pills nav-justified nav-responsive bg-primary bg-opacity-10 rounded mt-4 mb-3 p-2" id="flightlist-tab" role="tablist">
+									<!-- Tab item -->
+									<li class="nav-item" role="presentation">
+										<button class="nav-link active mb-0" id="flightlist-tab-1" data-bs-toggle="pill" data-bs-target="#flightlist-tab1" type="button" role="tab" aria-controls="flightlist-tab1" aria-selected="true">Flight Information</button>
+									</li>
+								</ul>
+								<!-- Tabs END -->
+                             </div>
+
+                                </div>
                                 </div>
                                 <!-- Card body END -->
                             </div>
@@ -199,49 +214,10 @@ Main Content START -->
 
                                         <div class="d-grid mt-4 gap-2">
 
-                                            <div
-                                                class="form-check form-check-inline mb-0">
-                                                <input class="form-check-input"
-                                                    type="radio"
-                                                    name="discountOptions"
-                                                    id="discount2"
-                                                    value="option2" checked>
-                                                <label
-                                                    class="form-check-label h6 fw-normal mb-0"
-                                                    for="discount2">Pay 100% now
-                                                    (Full payment)</label>
-                                            </div>
 
-                                            <div
-                                                class="form-check form-check-inline mb-0">
-                                                <input class="form-check-input"
-                                                    type="radio"
-                                                    name="discountOptions"
-                                                    id="discount1"
-                                                    value="option1">
-                                                <label
-                                                    class="form-check-label h6 fw-normal mb-0"
-                                                    for="discount1">Pay 20% now
-                                                    (Advance Payment)</label>
-                                            </div>
-
-                                            <div
-                                                class="form-check form-check-inline mb-0">
-                                                <input class="form-check-input"
-                                                    type="radio"
-                                                    name="discountOptions"
-                                                    id="discount3"
-                                                    value="option3">
-                                                <label
-                                                    class="form-check-label h6 fw-normal mb-0"
-                                                    for="discount3">Pay Cash to
-                                                    driver</label>
-                                            </div>
 
                                             <!-- Button -->
-                                            <button type="submit" name="save"
-                                                value="submit"
-                                                class="btn btn-dark mb-0 mt-2">PROCEED</button>
+                                            <button type="submit" name="save" value="submit" class="btn btn-dark mb-0 mt-2">PROCEED</button>
                                         </form>
                                     </div>
                                 </div>
