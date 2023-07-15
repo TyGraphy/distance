@@ -21,6 +21,7 @@ urlpatterns = [
     path('logout_view/', views.logout_view, name='logout_view'),
     path('for-password/', views.PASSWORD, name='password'),
     path('profile/', views.PROFILE, name='profile'),
+    path('privacy/', views.PRIVACY, name='privacy'),
     path('admin/', include('customadmin.urls')),
 
 

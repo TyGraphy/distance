@@ -453,6 +453,10 @@ def PROFILE(request):
    return render(request, 'profile.html')
 
 
+def PRIVACY(request):
+   return render(request, 'privacy&policy.html')
+
+
 
 
 def otp(request):
