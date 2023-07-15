@@ -68,13 +68,13 @@ Main Content START -->
                                     <div class="col-md-6">
                                         <div class="form-control-bg-light">
                                             <label class="form-label required" style="font-weight: bolder;">Mobile number</label>
-                                            <input value="{{user.mobile}}" style="font-style:italic" name="mobile_b" id="mobile_b" type="text" class="form-control form-control-lg" placeholder="Enter your mobile number" required>
+                                            <input minlength="10" maxlength="10" style="font-style:italic" name="mobile_b" id="mobile_b" type="text" class="form-control form-control-lg" placeholder="Enter your mobile number" required>
                                         </div>
                                     </div>
                                            <div class="col-md-12">
                                         <div class="form-control-bg-light">
                                             <label class="form-label required" style="font-weight: bolder;">Email (Your E-ticket will be sent here)</label>
-                                            <input value="{{user.email}}" style="font-style:italic" name="email" id="email" type="email" class="form-control form-control-lg" placeholder="Enter your email" required>
+                                            <input style="font-style:italic" name="email" id="email" type="email" class="form-control form-control-lg" placeholder="Enter your email" required>
                                         </div>
                                     </div>
 
@@ -98,6 +98,7 @@ Main Content START -->
                                             <label class="form-label required" style="font-weight: bolder;">Drop address</label>
                                             <input style="font-style:italic" name="drop_address" id="drop_address" type="text" class="form-control form-control-lg" placeholder="Enter drop address" required>
                                             <input id="booking_id" name="booking_id" type="hidden">
+
                                         </div>
                                     </div>
 
@@ -144,7 +145,7 @@ Main Content START -->
 
                             <div class="card border p-4">
                                 <div class="card-body p-0">
-                                    <div class="row g-1 ">
+                                    <div class="row g-0">
                                         <!-- Image -->
                                         <div class="col-md-6">
 
@@ -155,10 +156,9 @@ Main Content START -->
 
                                         <!-- Title -->
                                         <div class="border-bottom ">
-                                            <p><h6 class="mb-1">Trip Details</h6><b>Route:</b><span>{{source|join:" "}}
-                                                    >> {{destination|join:" "}}</span></p>
-                                            Pickup-Date: <span>{{date|join:" "}}</span>
-                                            & Time: <span>{{time|join:" "}}</span>
+                                            <p><h6 class="mb-1">Trip Details</h6><b>Route:</b><span>{{source|join:" "}}>> {{destination|join:" "}}</span></p>
+                                            <p><b>Car:</b><span> {{car}}</span> - <span> {{car_type}}</span> - <span> {{seat}}</span></p>
+                                            Pickup-Date: <span>{{date|join:" "}}</span>& Time: <span>{{time|join:" "}}</span>
                                         </div>
 
                                         <!-- List -->
@@ -171,7 +171,7 @@ Main Content START -->
                                                 <span class="h6 fw-light mb-0">₹
                                                     {{base_fare}}</span>
                                             </li>
-                                            <li
+                                            <!--<li
                                                 class="list-group-item d-flex justify-content-between">
                                                 <span class="h6 fw-light mb-0">State
                                                     Tax</span>
@@ -191,7 +191,7 @@ Main Content START -->
                                                     Charges</span>
                                                 <span class="h6 fw-light mb-0">₹
                                                     0</span>
-                                            </li>
+                                            </li>-->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 <span class="h6 fw-light mb-0">Coupon Discount<span class="badge text-bg-danger smaller mb-0 ms-2">15%off</span></span>
                                                 <span class="fs-6 text-success">- ₹ 0 </span>

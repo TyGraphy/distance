@@ -252,6 +252,9 @@ Cab list START -->
 									</ul>
                                 <form method="post" action="{% url 'cab-detail' %}">
                                      {% csrf_token %}
+									<input type="hidden" name="car1" value="WagonR OR Similar">
+									<input type="hidden" name="car_type1" value="Hatchback">
+									<input type="hidden" name="seat1" value="4 Seat">
 									<input type="hidden" name="base1" value="{{ base_fare1 }}">
 									<input type="hidden" name="gst1" value="{{ gst1 }}">
 									<input type="hidden" name="total1" value="{{ total_fare1 }}">
@@ -352,7 +355,7 @@ Cab list START -->
 
 									<!-- Nav divider -->
 									<ul class="nav nav-divider h6 fw-normal mb-2">
-										<li class="nav-item">SUV</li>
+										<li class="nav-item">Sedan</li>
 										<li class="nav-item">AC</li>
 										<li class="nav-item">4 Seats</li>
 									</ul>
@@ -380,7 +383,9 @@ Cab list START -->
 									</ul>
 								<form method="post" action="{% url 'cab-detail' %}">
 									{% csrf_token %}
-									<input type="hidden" name="car2" id="car2">
+									<input type="hidden" name="car2" value="Dzire OR Similar">
+									<input type="hidden" name="car_type2" value="Sedan">
+									<input type="hidden" name="seat2" value="4 Seat">
 									<input type="hidden" name="base2" value="{{ base_fare2 }}">
 									<input type="hidden" name="gst2" value="{{ gst2 }}">
 									<input type="hidden" name="total2" value="{{ total_fare2 }}">
@@ -514,7 +519,9 @@ Cab list START -->
 
 								<form method="post" action="{% url 'cab-detail' %}">
 									{% csrf_token %}
-
+                                    <input type="hidden" name="car3" value="Ertiga, Xylo OR Similar">
+									<input type="hidden" name="car_type3" value="SUV">
+									<input type="hidden" name="seat3" value="6 Seat">
 									<input type="hidden" name="base3" value="{{ base_fare3 }}">
 									<input type="hidden" name="gst3" value="{{ gst3 }}">
 									<input type="hidden" name="total3" value="{{ total_fare3 }}">
@@ -646,7 +653,9 @@ Cab list START -->
 									</ul>
 								<form method="post" action="{% url 'cab-detail' %}">
 									{% csrf_token %}
-									<input type="hidden" name="car4" id="car4">
+									<input type="hidden" name="car4" value="Innova Crysta">
+									<input type="hidden" name="car_type4" value="Assured">
+									<input type="hidden" name="seat4" value="7 Seat">
 									<input type="hidden" name="base4" value="{{ base_fare4 }}">
 									<input type="hidden" name="gst4" value="{{ gst4 }}">
 									<input type="hidden" name="total4" value="{{ total_fare4 }}">

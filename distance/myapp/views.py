@@ -307,18 +307,30 @@ def CAB_DETAIL(request):
         form_identifier = request.POST.get('form_identifier')
 
         if form_identifier == 'form1':
+            car = request.POST.get('car1')
+            car_type = request.POST.get('car_type1')
+            seat = request.POST.get('seat1')
             base_fare = request.POST.get('base1')
             gst = request.POST.get('gst1')
             total_fare = request.POST.get('total1')
         elif form_identifier == 'form2':
+            car = request.POST.get('car2')
+            car_type = request.POST.get('car_type2')
+            seat = request.POST.get('seat2')
             base_fare = request.POST.get('base2')
             gst = request.POST.get('gst2')
             total_fare = request.POST.get('total2')
         elif form_identifier == 'form3':
+            car = request.POST.get('car3')
+            car_type = request.POST.get('car_type3')
+            seat = request.POST.get('seat3')
             base_fare = request.POST.get('base3')
             gst = request.POST.get('gst3')
             total_fare = request.POST.get('total3')
         elif form_identifier == 'form4':
+            car = request.POST.get('car4')
+            car_type = request.POST.get('car_type4')
+            seat = request.POST.get('seat4')
             base_fare = request.POST.get('base4')
             gst = request.POST.get('gst4')
             total_fare = request.POST.get('total4')
@@ -345,6 +357,9 @@ def CAB_DETAIL(request):
         'time': time,
         'gst': gst,
         'base_fare': base_fare,
+        'car':car,
+        'car_type':car_type,
+        'seat':seat
 
     }
 
@@ -370,6 +385,7 @@ def CAB_BOOKING(request):
 
 
 
+
         en = booking(
 
             name=name,
@@ -379,7 +395,8 @@ def CAB_BOOKING(request):
             drop_city=drop_city,
             pickup_address=pickup_address,
             drop_address=drop_address,
-            booking_id=booking_id
+            booking_id=booking_id,
+
 
         )
         en.save()
@@ -413,6 +430,7 @@ def CAB_BOOKING(request):
         'payment_amount': payment_amount,
         'booking_id': booking_id,
         'total': float(total),
+
 
 
     }
