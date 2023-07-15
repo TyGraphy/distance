@@ -127,9 +127,10 @@ Main Content START -->
 									  <p style="color: red;">{{ error }}</p>
                                       {% endif %}
 									<!-- Input box -->
-									{% csrf_token %}
+
 									<p class="mb-1">Enter the code we have sent you:</p>
-									<input type="hidden" name="mobile_number" value="{{ mobile_number }}" >
+									{% csrf_token %}
+									<input type="hidden" name="mobile_number" value="{{ mobile }}" >
 									<div class="autotab d-flex justify-content-between gap-1 gap-sm-3 mb-2" >
 										<input type="text" id="otp" name="otp" maxlength="6" class="form-control text-center p-3">
 									</div>

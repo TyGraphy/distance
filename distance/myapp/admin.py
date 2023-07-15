@@ -9,10 +9,11 @@ from .models import *
 class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'mobile', 'email', 'is_staff')
     search_fields = ('username', 'mobile', 'email')
-    ordering = ('username',)
+
 
 
 
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(booking)
+admin.site.register(Cars)
 

@@ -116,24 +116,12 @@ Main Content START -->
 									<img alt="logo" class="h-50px mb-4" src="{% static 'assets/images/logo3.svg' %}">
 								</a>
 								<!-- Title -->
-									{% if messages %}
-                        {% for message in messages %}
-                        {% if message.tags == 'error' %}
-                       <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                               {{message}}
-                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                              {% endif %}
-                           {% endfor %}
-                        {% endif %}
 								<h1 class="mb-2 h3">Create new account</h1>
 								<p class="mb-0">Already a member?<a href="{% url 'login' %}"> Log in</a></p>
 
 		
 								<!-- Form START -->
-								<form class="mt-4 text-start" method="post" action="{% url 'register' %}">
+								<form class="mt-4 text-start" method="post" action="{% url 'otp' %}">
 									 {% csrf_token %}
 
 									<!-- Email -->
@@ -141,14 +129,34 @@ Main Content START -->
 										<label class="form-label">Username</label>
 										<input id="username" class="form-control" name="username" type="text">
 									</div>
+
 									<div class="mb-3">
+
 										<label class="form-label">Enter Number</label>
 										<input  class="form-control" type="number" id="mobile" name="mobile">
+
 									</div>
+									{% if messages %}
+  {% for message in messages %}
+    {% if message.tags == 'error' %}
+      {% if message == 'Please enter a valid email.' %}
+        <div class="bg bg-danger">Email Error: {{ message }}</div>
+      {% elif message == 'Please enter a valid mobile number.' %}
+        <div class="bg bg-danger">Mobile Error: {{ message }}</div>
+      {% else %}
+        <div class="bg bg-danger">{{ message }}</div>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+
 									<div class="mb-3">
 										<label class="form-label">Enter Email</label>
 										<input name="email" id="email" class="form-control" type="email">
 									</div>
+
+
 									<div class="mb-3">
 										<label class="form-label">Create Password</label>
 										<input  class="form-control" type="password" id="password" name="password">

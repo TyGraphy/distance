@@ -57,7 +57,7 @@ Main Content START -->
                                         {% csrf_token %}
                                         <div class="form-control-bg-light">
                                             <label class="form-label required" style="font-weight: bolder;">Full Name</label>
-                                            <input style="font-style:italic" name="name" id="name" type="text" class="form-control form-control-lg" placeholder="Enter your name" required>
+                                            <input value="{{user.username}}" style="font-style:italic" name="name" id="name" type="text" class="form-control form-control-lg" placeholder="Enter your name" required>
                                         </div>
                                     </div>
                                     <input value="{{source}}" name="pickup_city" id="pickup_city" hidden>
@@ -68,22 +68,22 @@ Main Content START -->
                                     <div class="col-md-6">
                                         <div class="form-control-bg-light">
                                             <label class="form-label required" style="font-weight: bolder;">Mobile number</label>
-                                            <input style="font-style:italic" name="mobile_b" id="mobile_b" type="text" class="form-control form-control-lg" placeholder="Enter your mobile number" required>
+                                            <input value="{{user.mobile}}" style="font-style:italic" name="mobile_b" id="mobile_b" type="text" class="form-control form-control-lg" placeholder="Enter your mobile number" required>
                                         </div>
                                     </div>
-                                           <div class="col-md-6">
+                                           <div class="col-md-12">
                                         <div class="form-control-bg-light">
                                             <label class="form-label required" style="font-weight: bolder;">Email (Your E-ticket will be sent here)</label>
-                                            <input style="font-style:italic" name="email" id="email" type="email" class="form-control form-control-lg" placeholder="Enter your email" required>
+                                            <input value="{{user.email}}" style="font-style:italic" name="email" id="email" type="email" class="form-control form-control-lg" placeholder="Enter your email" required>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                   <!-- <div class="col-md-6">
                                         <div class="form-control-bg-light">
-                                            <label class="form-label required" style="font-weight: bolder;">WhatsApp number</label>
+                                            <label class="form-label required" style="font-weight: bolder;">Traveler number</label>
                                             <input style="font-style:italic" id="altmobile" name="altmobile" class="form-control form-control-lg" placeholder="Fill with country code" required>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="col-md-6">
                                         <div class="form-control-bg-light">
                                             <b><label class="form-label required" style="font-weight: bolder;">Pickup address</label></b>
@@ -97,6 +97,7 @@ Main Content START -->
                                         <div class="form-control-bg-light">
                                             <label class="form-label required" style="font-weight: bolder;">Drop address</label>
                                             <input style="font-style:italic" name="drop_address" id="drop_address" type="text" class="form-control form-control-lg" placeholder="Enter drop address" required>
+                                            <input id="booking_id" name="booking_id" type="hidden">
                                         </div>
                                     </div>
 
@@ -208,7 +209,8 @@ Main Content START -->
                                                 class="list-group-item d-flex justify-content-between pb-0">
                                                 <span class="h5 fw-normal mb-0">Total</span>
                                                 <span class="h5 fw-normal mb-0">₹
-                                                    {{total_fare }}</span>
+                                                    {{ total_fare }}</span>
+                                                <input type="hidden" name="total" value="{{total_fare}}">
                                             </li>
                                         </ul>
 

@@ -1,25 +1,53 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
-
+from django.utils import timezone
+import uuid
+import random
 
 
 class User(AbstractUser):
     username = models.CharField(max_length=100)
     mobile = models.CharField(max_length=10, unique=True)
-    #otp = models.CharField(max_length=6)
+    otp = models.CharField(max_length=6)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=20)
-    #is_mobile_verified = models.BooleanField(default=False)
+    is_mobile_verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username', 'mobile']
+
+
+
+
+
+class Cars(models.Model):
+    unique_id = models.CharField(unique=True, max_length=200, null=True, blank=True)
+    car_name = models.CharField(max_length=100)
+    type = models.CharField(max_length=100)
+    seat = models.CharField(max_length=100)
+    photo = models.FileField(upload_to='media/')
+    created_date = models.DateTimeField(default=timezone.now)
+    per_km_price = models.DecimalField(max_digits=10, decimal_places=2, default=10)
+
+
+    def save(self, *args, **kwargs):
+        if self.unique_id is None and self.created_date and self.id:
+            self.unique_id = self.created_date.strftime('75%Y%m%d23') + str(self.id)
+
+        return super().save(*args, **kwargs)
+
+
+
+    def __str__(self):
+        return self.car_name
+
 
 
 
 
 class booking(models.Model):
-
+    booking_id = models.CharField(max_length=10, unique=True, default='')
+    #user = models.ForeignKey(User, on_delete=models.CASCADE, default='')
     pickup_city = models.CharField(max_length=100,default='')
     drop_city = models.CharField(max_length=100,default='')
     pickup_address = models.CharField(max_length=200)
@@ -45,7 +73,11 @@ class booking(models.Model):
             user = User.objects.create_user(username=username, email=email, mobile=mobile)
             user.save()
 
-        super().save(*args, **kwargs)
+        if not self.booking_id:
+            self.booking_id = generate_unique_booking_id()
+
+        super(booking, self).save(*args, **kwargs)
+
 
 
 
@@ -53,6 +85,10 @@ class booking(models.Model):
         return self.name
 
 
-
+def generate_unique_booking_id():
+    timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+    random_number = random.randint(1000, 9999)
+    booking_id = f'{timestamp}-{random_number}'
+    return booking_id
 
 

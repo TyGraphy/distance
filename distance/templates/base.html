@@ -75,27 +75,8 @@
 
 	</script>
 
-<script>
-$(document).ready(function() {
-  // Target the radio buttons with the class 'payment-option'
-  $('.payment-option').change(function() {
-    // Get the selected radio button value
-    var selectedOption = $('input[name="discountOptions"]:checked').val();
 
-    // Update the prices based on the selected option
-    if (selectedOption === 'option1') {
-      $('#price-container').find('.text-success').text('₹ {{ payment_amount }}');
-      $('#price-container').find('.text-danger').text('₹ {{ rem_amount }}');
-    } else if (selectedOption === 'option2') {
-      $('#price-container').find('.text-success').text('₹ {{ total_fare }}');
-      $('#price-container').find('.text-danger').text('₹ {{ rem_amount }}');
-    } else if (selectedOption === 'option3') {
-      $('#price-container').find('.text-success').text('₹ {{ total_fare }}');
-      $('#price-container').find('.text-danger').text('₹ {{ rem_amount }}');
-    }
-  });
-});
-</script>
+
 
 	<!-- Google place api -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX0OjsvGZFaLvdaYyOvaWvRmSpnEqVNIo&libraries=places"></script>
@@ -124,6 +105,24 @@ $(document).ready(function() {
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<script>
+  $(document).ready(function() {
+    $('.payment-option').change(function() {
+      var totalAmount = parseFloat('{{ total }}');
+      var selectedOption = $('input[name="discountOptions"]:checked').val();
+      var paymentAmount = 0;
+
+      if (selectedOption === 'option2') {
+        paymentAmount = totalAmount;
+      } else if (selectedOption === 'option1') {
+        paymentAmount = totalAmount * 0.2;
+      }
+
+      $('#payment-amount').text('₹' + paymentAmount.toFixed(2));
+    });
+  });
 </script>
 
 
@@ -177,6 +176,7 @@ $(document).ready(function() {
 
 <main>
 {% block content %}
+
 {% endblock %}
 </main>
 

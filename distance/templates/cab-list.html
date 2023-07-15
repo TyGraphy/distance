@@ -247,47 +247,21 @@ Cab list START -->
 									<p class="text-danger mb-0">15% Off</p>
 									<!-- Price -->
 									<ul class="list-inline mb-1">
-										<li class="list-inline-item text-decoration-line-through me-1">₹ {{dis_fare}}</li>
-										<li class="list-inline-item h5 mb-0">₹ {{total_fare}}</li>
+										<li class="list-inline-item text-decoration-line-through me-1">₹ {{ dis_fare1 }}</li>
+										<li class="list-inline-item h5 mb-0">₹ {{ total_fare1 }}</li>
 									</ul>
-
-									<button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-dark mb-0">Select</button>
+                                <form method="post" action="{% url 'cab-detail' %}">
+                                     {% csrf_token %}
+									<input type="hidden" name="base1" value="{{ base_fare1 }}">
+									<input type="hidden" name="gst1" value="{{ gst1 }}">
+									<input type="hidden" name="total1" value="{{ total_fare1 }}">
+									<input type="hidden" name="form_identifier" value="form1">
+									<button type="submit" class="btn btn-dark mb-0">Select</button>
+								</form>
                                     <ul class="list-inline mb-1">
 										<a data-bs-toggle="modal" href="#staticBackdrop"><u> Fare Summary</u></a>
 									</ul>
 								</div>
-
-
-
-
-
-
-<!------------------------------------------ login required ------------------------------------------>
-<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-			  <ul style="list-style:none; padding:0;">
-            <li><label class="col-form-label"><h5>Phone number</h5></label></li>
-			(Please put phone number with country code e.g +918123456789)
-            <li><input type="text" class="form-control" placeholder="Enter your mobile number"></li>
-			  </ul>
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a type="button" href="{% url 'cab-detail' %}" class="btn btn-primary">process</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 
 
 
@@ -305,16 +279,16 @@ Cab list START -->
 			<div>
 				<ul style="list-style:none; padding:0;">
 					<li><h6>Fare Breakup:</h6></li>
-					<li>Estimated Amount <span style="float:right;">₹ {{base_fare}}</span></li>
+					<li>Estimated Amount <span style="float:right;">₹ {{base_fare1}}</span></li>
 					<li>Covered Kms <span style="float:right;">{{distance}} Km</span></li>
-					<li>GST (5%) <span style="float:right;">₹ {{gst|floatformat:"0"}}</span></li>
-					<li>Total Cost <span style="float:right;">₹ {{total_fare}}</span></li>
+					<li>GST (5%) <span style="float:right;">₹ {{gst1|floatformat:"0"}}</span></li>
+					<li>Total Cost <span style="float:right;">₹ {{total_fare1}}</span></li>
 				</ul>
 
 					<h6>Additional Charges ( If any ):</h6>
 				<ul>
 					<li>Usable Oneway Limit {{distance}} Kms</li>
-					<li>After {{distance}} Extra Charges ₹. 0 Per KM</li>
+					<li>After {{distance}} Kms Extra Charges ₹. 0 Per KM</li>
 				</ul>
 			</div>
 			<div>
@@ -335,7 +309,7 @@ Cab list START -->
 				<ul>
 					<li>Kms & Timing will be charged from customer location</li>
 					<li>Car shall not be used for local use in (City) after completion of one way duty.</li>
-					<li>In case of Booking wil be Cancelled then infrom to us before 24 Hrs in then Pickup Time</li>
+					<li>In case of Booking wil be Cancelled then inform to us before 24 Hrs in then Pickup Time</li>
 					<li>Toll Tax, Inter State Tax Are Included</li>
 				</ul>
 			</div>
@@ -358,7 +332,9 @@ Cab list START -->
 					</div>
 					<!-- Cab item END -->
 
-					<!-- Cab item START -->
+
+
+<!-- Cab item START -->
 					<div class="card border p-4">
 						<!-- Card body START -->
 						<div class="card-body p-0">
@@ -372,24 +348,26 @@ Cab list START -->
 
 								<!-- Card title and rating -->
 								<div class="col-sm-6 col-md-4 col-xl-6">
-									<h4 class="card-title mb-2"><a href="{% url 'cab-detail' %}" class="stretched-link">Dzire OR Similar</a></h4>
+									<h4 class="card-title mb-2">Dzire OR Similar</h4>
+
 									<!-- Nav divider -->
 									<ul class="nav nav-divider h6 fw-normal mb-2">
-										<li class="nav-item">Sedan</li>
+										<li class="nav-item">SUV</li>
 										<li class="nav-item">AC</li>
 										<li class="nav-item">4 Seats</li>
 									</ul>
 
 									<!-- Rating Star -->
 									<ul class="list-inline mb-0">
-										<li class="list-inline-item h6 fw-normal me-1 mb-0">4.8</li>
+										<li class="list-inline-item h6 fw-normal me-1 mb-0">4.5</li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
-										<li class="list-inline-item me-0"><i class="fa-solid fa-star-half-alt text-warning"></i></li>
+										<li class="list-inline-item"><i class="fa-solid fa-star-half-alt text-warning"></i></li>
 									</ul>
 								</div>
+
 
 								<!-- Button -->
 								<div class="col-sm-6 col-md-4 col-xl-3 text-sm-end">
@@ -397,21 +375,32 @@ Cab list START -->
 									<p class="text-danger mb-0">15% Off</p>
 									<!-- Price -->
 									<ul class="list-inline mb-1">
-										<li class="list-inline-item text-decoration-line-through me-1">₹ {{dis_fare}}</li>
-										<li class="list-inline-item h5 mb-0">₹ {{total_fare}}</li>
+										<li class="list-inline-item text-decoration-line-through me-1">₹ {{ dis_fare2 }}</li>
+										<li class="list-inline-item h5 mb-0">₹ {{ total_fare2 }}</li>
 									</ul>
-									 <a href="{% url 'cab-detail' %}" class="btn btn-dark mb-0">Select</a>
-									<ul class="list-inline mb-1">
-										<a data-bs-toggle="modal" href="#staticBackdrop"><u> Fare Summary</u></a>
+								<form method="post" action="{% url 'cab-detail' %}">
+									{% csrf_token %}
+									<input type="hidden" name="car2" id="car2">
+									<input type="hidden" name="base2" value="{{ base_fare2 }}">
+									<input type="hidden" name="gst2" value="{{ gst2 }}">
+									<input type="hidden" name="total2" value="{{ total_fare2 }}">
+									<input type="hidden" name="form_identifier" value="form2">
+									<button type="submit" class="btn btn-dark mb-0">Select</button>
+								</form>
+                                    <ul class="list-inline mb-1">
+										<a data-bs-toggle="modal" href="#staticBackdrop2"><u> Fare Summary</u></a>
 									</ul>
 								</div>
 
-																<!-- Modal -->
 
-		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+								<!-- Modal -->
+
+		<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
          <div class="modal-content">
        <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel" align="center">Fare Summary</h5>
+        <h5 class="modal-title" id="staticBackdropLabel2" align="center">Fare Summary</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -419,33 +408,37 @@ Cab list START -->
 			<div>
 				<ul style="list-style:none; padding:0;">
 					<li><h6>Fare Breakup:</h6></li>
-					<li>Estimated Amount <span style="float:right;">₹ {{base_fare}}</span></li>
+					<li>Estimated Amount <span style="float:right;">₹ {{base_fare2}}</span></li>
 					<li>Covered Kms <span style="float:right;">{{distance}} Km</span></li>
-					<li>GST (5%) <span style="float:right;">₹ {{gst|floatformat:"0"}}</span></li>
-					<li>Total Cost <span style="float:right;">₹ {{total_fare}}</span></li>
+					<li>GST (5%) <span style="float:right;">₹ {{gst2|floatformat:"0"}}</span></li>
+					<li>Total Cost <span style="float:right;">₹ {{total_fare2}}</span></li>
 				</ul>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Additional Charges ( If any ):</h6></li>
+
+					<h6>Additional Charges ( If any ):</h6>
+				<ul>
 					<li>Usable Oneway Limit {{distance}} Kms</li>
-					<li>After {{distance}} Extra Charges ₹. 0 Per KM</li>
+					<li>After {{distance}} Kms Extra Charges ₹. 0 Per KM</li>
 				</ul>
 			</div>
 			<div>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Inclusion :</h6></li>
+
+				    <h6>Inclusion :</h6>
+				<ul>
 					<li>Driver, Vehicle and Fuel</li>
 					<li>Toll Tax,State Tax, Driver Food & Stay charge</li>
 				</ul>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Exclusion :</h6></li>
+
+					<h6>Exclusion :</h6>
+				<ul>
 					<li>Parking Charge, Airport Parking Charge</li>
 
 				</ul>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Notes :</h6></li>
+
+					<h6>Notes :</h6>
+				<ul>
 					<li>Kms & Timing will be charged from customer location</li>
 					<li>Car shall not be used for local use in (City) after completion of one way duty.</li>
-					<li>In case of Booking wil be Cancelled then infrom to us before 24 Hrs in then Pickup Time</li>
+					<li>In case of Booking wil be Cancelled then inform to us before 24 Hrs in then Pickup Time</li>
 					<li>Toll Tax, Inter State Tax Are Included</li>
 				</ul>
 			</div>
@@ -457,18 +450,24 @@ Cab list START -->
 </div>
 
 
+
+
 							</div> <!-- Row END -->
 						</div>
 						<!-- Card body END -->
 
-
-
-
+						<!-- Card footer START -->
 
 					</div>
 					<!-- Cab item END -->
 
-					<!-- Cab item START -->
+
+
+
+
+
+
+<!-- Cab item START -->
 					<div class="card border p-4">
 						<!-- Card body START -->
 						<div class="card-body p-0">
@@ -482,7 +481,8 @@ Cab list START -->
 
 								<!-- Card title and rating -->
 								<div class="col-sm-6 col-md-4 col-xl-6">
-									<h4 class="card-title mb-2"><a href="{% url 'cab-detail' %}" class="stretched-link">Ertiga, Xylo OR Similar</a></h4>
+									<h4 class="card-title mb-2">Ertiga, Xylo OR Similar</h4>
+
 									<!-- Nav divider -->
 									<ul class="nav nav-divider h6 fw-normal mb-2">
 										<li class="nav-item">SUV</li>
@@ -492,14 +492,15 @@ Cab list START -->
 
 									<!-- Rating Star -->
 									<ul class="list-inline mb-0">
-										<li class="list-inline-item h6 fw-normal me-1 mb-0">4.3</li>
+										<li class="list-inline-item h6 fw-normal me-1 mb-0">4.5</li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
-										<li class="list-inline-item me-0"><i class="fa-solid fa-star-half-alt text-warning"></i></li>
+										<li class="list-inline-item"><i class="fa-solid fa-star-half-alt text-warning"></i></li>
 									</ul>
 								</div>
+
 
 								<!-- Button -->
 								<div class="col-sm-6 col-md-4 col-xl-3 text-sm-end">
@@ -507,21 +508,33 @@ Cab list START -->
 									<p class="text-danger mb-0">15% Off</p>
 									<!-- Price -->
 									<ul class="list-inline mb-1">
-										<li class="list-inline-item text-decoration-line-through me-1">₹ {{dis_fare}}</li>
-										<li class="list-inline-item h5 mb-0">₹ {{total_fare}}</li>
+										<li class="list-inline-item text-decoration-line-through me-1">₹ {{ dis_fare3 }}</li>
+										<li class="list-inline-item h5 mb-0">₹ {{ total_fare3 }}</li>
 									</ul>
-									<a href="{% url 'cab-detail' %}" class="btn btn-dark mb-0">Select</a>
-									<ul class="list-inline mb-1">
-										<a data-bs-toggle="modal" href="#staticBackdrop"><u> Fare Summary</u></a>
+
+								<form method="post" action="{% url 'cab-detail' %}">
+									{% csrf_token %}
+
+									<input type="hidden" name="base3" value="{{ base_fare3 }}">
+									<input type="hidden" name="gst3" value="{{ gst3 }}">
+									<input type="hidden" name="total3" value="{{ total_fare3 }}">
+									<input type="hidden" name="form_identifier" value="form3">
+									<button type="submit" class="btn btn-dark mb-0">Select</button>
+								</form>
+                                    <ul class="list-inline mb-1">
+										<a data-bs-toggle="modal" href="#staticBackdrop3"><u> Fare Summary</u></a>
 									</ul>
 								</div>
 
-																<!-- Modal -->
 
-		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+								<!-- Modal -->
+
+		<div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel3" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
          <div class="modal-content">
        <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel" align="center">Fare Summary</h5>
+        <h5 class="modal-title" id="staticBackdropLabel3" align="center">Fare Summary</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -529,33 +542,37 @@ Cab list START -->
 			<div>
 				<ul style="list-style:none; padding:0;">
 					<li><h6>Fare Breakup:</h6></li>
-					<li>Estimated Amount <span style="float:right;">₹ {{base_fare}}</span></li>
+					<li>Estimated Amount <span style="float:right;">₹ {{base_fare3}}</span></li>
 					<li>Covered Kms <span style="float:right;">{{distance}} Km</span></li>
-					<li>GST (5%) <span style="float:right;">₹ {{gst|floatformat:"0"}}</span></li>
-					<li>Total Cost <span style="float:right;">₹ {{total_fare}}</span></li>
+					<li>GST (5%) <span style="float:right;">₹ {{gst3|floatformat:"0"}}</span></li>
+					<li>Total Cost <span style="float:right;">₹ {{total_fare3}}</span></li>
 				</ul>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Additional Charges ( If any ):</h6></li>
+
+					<h6>Additional Charges ( If any ):</h6>
+				<ul>
 					<li>Usable Oneway Limit {{distance}} Kms</li>
-					<li>After {{distance}} Extra Charges ₹. 0 Per KM</li>
+					<li>After {{distance}} Kms Extra Charges ₹. 0 Per KM</li>
 				</ul>
 			</div>
 			<div>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Inclusion :</h6></li>
+
+				    <h6>Inclusion :</h6>
+				<ul>
 					<li>Driver, Vehicle and Fuel</li>
 					<li>Toll Tax,State Tax, Driver Food & Stay charge</li>
 				</ul>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Exclusion :</h6></li>
+
+					<h6>Exclusion :</h6>
+				<ul>
 					<li>Parking Charge, Airport Parking Charge</li>
 
 				</ul>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Notes :</h6></li>
+
+					<h6>Notes :</h6>
+				<ul>
 					<li>Kms & Timing will be charged from customer location</li>
 					<li>Car shall not be used for local use in (City) after completion of one way duty.</li>
-					<li>In case of Booking wil be Cancelled then infrom to us before 24 Hrs in then Pickup Time</li>
+					<li>In case of Booking wil be Cancelled then inform to us before 24 Hrs in then Pickup Time</li>
 					<li>Toll Tax, Inter State Tax Are Included</li>
 				</ul>
 			</div>
@@ -567,19 +584,27 @@ Cab list START -->
 </div>
 
 
+
+
 							</div> <!-- Row END -->
 						</div>
 						<!-- Card body END -->
 
+						<!-- Card footer START -->
 
 					</div>
 					<!-- Cab item END -->
 
-					<!-- Cab item START -->
+
+
+
+
+
+<!-- Cab item START -->
 					<div class="card border p-4">
 						<!-- Card body START -->
 						<div class="card-body p-0">
-							<div class="row g-2 g-sm-4 align-items-center mb-4">
+							<div class="row g-2 g-sm-4 mb-4">
 								<!-- Card image -->
 								<div class="col-md-4 col-xl-3">
 									<div class="bg-light rounded-3 px-4 py-5">
@@ -589,7 +614,8 @@ Cab list START -->
 
 								<!-- Card title and rating -->
 								<div class="col-sm-6 col-md-4 col-xl-6">
-									<h4 class="card-title mb-2"><a href="{% url 'cab-detail' %}" class="stretched-link">Innova Crysta</a></h4>
+									<h4 class="card-title mb-2">Innova Crysta</h4>
+
 									<!-- Nav divider -->
 									<ul class="nav nav-divider h6 fw-normal mb-2">
 										<li class="nav-item">Assured</li>
@@ -599,14 +625,15 @@ Cab list START -->
 
 									<!-- Rating Star -->
 									<ul class="list-inline mb-0">
-										<li class="list-inline-item h6 fw-normal mb-0 me-1">4.3</li>
+										<li class="list-inline-item h6 fw-normal me-1 mb-0">4.5</li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
 										<li class="list-inline-item me-0"><i class="fa-solid fa-star text-warning"></i></li>
-										<li class="list-inline-item me-0"><i class="fa-solid fa-star-half-alt text-warning"></i></li>
+										<li class="list-inline-item"><i class="fa-solid fa-star-half-alt text-warning"></i></li>
 									</ul>
 								</div>
+
 
 								<!-- Button -->
 								<div class="col-sm-6 col-md-4 col-xl-3 text-sm-end">
@@ -614,34 +641,32 @@ Cab list START -->
 									<p class="text-danger mb-0">15% Off</p>
 									<!-- Price -->
 									<ul class="list-inline mb-1">
-										<li class="list-inline-item text-decoration-line-through me-1">₹ {{dis_fare}}</li>
-
-										<li class="list-inline-item h5 mb-0">₹ {{total_fare}}</li>
+										<li class="list-inline-item text-decoration-line-through me-1">₹ {{ dis_fare4 }}</li>
+										<li class="list-inline-item h5 mb-0">₹ {{ total_fare4 }}</li>
 									</ul>
-									<button   class="btn btn-dark mb-0">Select</button>
-
-
-
-
-									<ul class="list-inline mb-1">
-										<a data-bs-toggle="modal" href="#staticBackdrop"><u> Fare Summary</u></a>
+								<form method="post" action="{% url 'cab-detail' %}">
+									{% csrf_token %}
+									<input type="hidden" name="car4" id="car4">
+									<input type="hidden" name="base4" value="{{ base_fare4 }}">
+									<input type="hidden" name="gst4" value="{{ gst4 }}">
+									<input type="hidden" name="total4" value="{{ total_fare4 }}">
+									<input type="hidden" name="form_identifier" value="form4">
+									<button type="submit" class="btn btn-dark mb-0">Select</button>
+								</form>
+                                    <ul class="list-inline mb-1">
+										<a data-bs-toggle="modal" href="#staticBackdrop4"><u> Fare Summary</u></a>
 									</ul>
 								</div>
 
 
-		<!------------------ number required --------------------------->
 
+								<!-- Modal -->
 
-
-
-
-
-																<!-- Modal -->
-
-		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal fade" id="staticBackdrop4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel4" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
          <div class="modal-content">
        <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel" align="center">Fare Summary</h5>
+        <h5 class="modal-title" id="staticBackdropLabel4" align="center">Fare Summary</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -649,33 +674,37 @@ Cab list START -->
 			<div>
 				<ul style="list-style:none; padding:0;">
 					<li><h6>Fare Breakup:</h6></li>
-					<li>Estimated Amount <span style="float:right;">₹ {{base_fare}}</span></li>
+					<li>Estimated Amount <span style="float:right;">₹ {{base_fare4}}</span></li>
 					<li>Covered Kms <span style="float:right;">{{distance}} Km</span></li>
-					<li>GST (5%) <span style="float:right;">₹ {{gst|floatformat:"0"}}</span></li>
-					<li>Total Cost <span style="float:right;">₹ {{total_fare}}</span></li>
+					<li>GST (5%) <span style="float:right;">₹ {{gst4|floatformat:"0"}}</span></li>
+					<li>Total Cost <span style="float:right;">₹ {{total_fare4}}</span></li>
 				</ul>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Additional Charges ( If any ):</h6></li>
+
+					<h6>Additional Charges ( If any ):</h6>
+				<ul>
 					<li>Usable Oneway Limit {{distance}} Kms</li>
-					<li>After {{distance}} Extra Charges ₹. 0 Per KM</li>
+					<li>After {{distance}} Kms Extra Charges ₹. 0 Per KM</li>
 				</ul>
 			</div>
 			<div>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Inclusion :</h6></li>
+
+				    <h6>Inclusion :</h6>
+				<ul>
 					<li>Driver, Vehicle and Fuel</li>
 					<li>Toll Tax,State Tax, Driver Food & Stay charge</li>
 				</ul>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Exclusion :</h6></li>
+
+					<h6>Exclusion :</h6>
+				<ul>
 					<li>Parking Charge, Airport Parking Charge</li>
 
 				</ul>
-				<ul style="list-style:none; padding:0;">
-					<li><h6>Notes :</h6></li>
+
+					<h6>Notes :</h6>
+				<ul>
 					<li>Kms & Timing will be charged from customer location</li>
 					<li>Car shall not be used for local use in (City) after completion of one way duty.</li>
-					<li>In case of Booking wil be Cancelled then infrom to us before 24 Hrs in then Pickup Time</li>
+					<li>In case of Booking wil be Cancelled then inform to us before 24 Hrs in then Pickup Time</li>
 					<li>Toll Tax, Inter State Tax Are Included</li>
 				</ul>
 			</div>
@@ -686,13 +715,29 @@ Cab list START -->
   </div>
 </div>
 
+
+
+
 							</div> <!-- Row END -->
 						</div>
 						<!-- Card body END -->
 
+						<!-- Card footer START -->
 
 					</div>
 					<!-- Cab item END -->
+
+
+
+
+
+
+
+
+
+
+
+
 
 					<!-- Pagination -->
 

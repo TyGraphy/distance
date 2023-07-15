@@ -5,15 +5,14 @@ from django.views.decorators.csrf import csrf_exempt
 import googlemaps
 import math
 from django.contrib.auth.decorators import login_required
-from myapp.models import booking
+
 from django.views import View
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-
 from rest_framework import status
-from .models import User
+from .models import *
 from .serializers import UserSerializer
 import requests
 from django.shortcuts import get_object_or_404
@@ -44,152 +43,34 @@ def INDEX(request):
    return render(request, 'index.html')
 
 
-def calculate_fare(request):
-    places = ['Mumbai, Maharashtra, India',
-                   'Silvassa, Dadra and Nagar Haveli and Daman and Diu, India',
-                   'Vapi, Gujarat, India', 'Valsad, Gujarat, India',
-                   'Navsari, Gujarat, India',
-                   'Surat, Gujarat, India',
-                   'Bharuch, Gujarat, India',
-                   'Ankleshwar, Gujarat, India',
-                   'Vadodara, Gujarat, India',
-                   'Udaipur, Rajasthan, India']
 
-    if request.method == 'POST' :
-        source = request.POST.getlist ( 'source' )  # Get the source as a string, not a list
-        destination = request.POST.getlist ( 'destination' )  # Get the destination as a string, not a list
-        date = request.POST.getlist ( 'date' )
-        time = request.POST.getlist ( 'time' )
-        per_km_price = 10  # Change this value according to your requirement
+#def REGISTER(request):
 
-        distance = calculate_distance ( source , destination )
-        toll_tax = distance
-
-        base_fare = distance * per_km_price + toll_tax
-
-        if any ( place in source for place in places ) and any ( place in destination for place in places ) :
-            base_fare = base_fare  # Base fare when both source and destination are in the array
-        elif any ( place in source for place in places ) or any ( place in destination for place in places ) :
-            base_fare += 1500  # Base fare + additional fare when either source or destination is in the array
-        else :
-            base_fare += 3000  # Base fare + additional fare when neither source nor destination is in the array
-
-        gst = base_fare * 0.05  # Add 5% GST amount
-
-        total_fare = base_fare + gst  # Add 5% GST amount
-
-        fare = total_fare * 0.15
-        dis_fare = fare + total_fare
-
-        distance = round ( distance )
-        total_fare = math.ceil ( total_fare )
-        gst = math.ceil ( gst )
-        base_fare = math.ceil ( base_fare )
-        dis_fare = math.ceil ( dis_fare )
-
-        context = {
-            'source' : source ,
-            'destination' : destination ,
-            'distance' : distance ,
-            'total_fare' : total_fare ,
-            'date' : date ,
-            'time' : time ,
-            'gst' : gst ,
-            'base_fare' : base_fare ,
-            'dis_fare' : dis_fare
-        }
-
-        request.session [ 'source' ] = source
-        request.session [ 'destination' ] = destination
-        request.session [ 'distance' ] = distance
-        request.session [ 'total_fare' ] = total_fare
-        request.session [ 'date' ] = date
-        request.session [ 'time' ] = time
-        request.session [ 'gst' ] = gst
-        request.session [ 'base_fare' ] = base_fare
-        request.session [ 'dis_fare' ] = dis_fare
-
-        return redirect ( 'cab_list' )
-
-    return redirect ( 'index' )
-
-
-def CAB(request):
-    source = request.session.get('source')
-    destination = request.session.get('destination')
-    distance = request.session.get('distance')
-    total_fare = request.session.get('total_fare')
-    date = request.session.get('date')
-    time = request.session.get('time')
-    gst = request.session.get('gst')
-    base_fare = request.session.get('base_fare')
-    dis_fare = request.session.get('dis_fare')
-
-    context = {
-        'source': source,
-        'destination': destination,
-        'distance': distance,
-        'total_fare': total_fare,
-        'date': date,
-        'time': time,
-        'gst': gst,
-        'base_fare': base_fare,
-        'dis_fare': dis_fare
-    }
-
-    return render(request, 'cab-list.html',context)
+    #if request.method == 'POST':
+     #   username = request.POST.get('username')
+     #   mobile = request.POST.get('mobile')
+     #   email = request.POST.get('email')
+     #   password = request.POST.get('password')
 
 
 
-def CAB_DETAIL(request):
-    source = request.session.get('source')
-    destination = request.session.get('destination')
-    distance = request.session.get('distance')
-    total_fare = request.session.get('total_fare')
-    date = request.session.get('date')
-    time = request.session.get('time')
-    gst = request.session.get('gst')
-    base_fare = request.session.get('base_fare')
+      #  if User.objects.filter(mobile=mobile).exists():
+       #     messages.error(request, 'mobile is already exists')
+       #     return redirect('login')
 
+       # if User.objects.filter(email=email).exists():
+      #      messages.error(request, 'email id is already exists')
+       #     return redirect('login')
 
-    context = {
-        'source': source,
-        'destination': destination,
-        'distance': distance,
-        'total_fare': total_fare,
-        'date': date,
-        'time': time,
-        'gst': gst,
-        'base_fare': base_fare
-    }
-
-    return render(request, 'cab-detail.html',context)
-
-def REGISTER(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        mobile = request.POST.get('mobile')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        if User.objects.filter(mobile=mobile).exists():
-            messages.error(request, 'mobile is already exists')
-            return redirect('login')
-
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'email id is already exists')
-            return redirect('login')
-
-        user = User(
-            mobile=mobile,
-            email=email,
-            username=username,
-
-        )
-        user.set_password(password)
-        user.save()
-        return redirect('login')
-    return render(request, 'register.html')
+      #  user = User(
+      #      mobile=mobile,
+      #      email=email,
+       #     username=username,
+       # )
+       # user.set_password(password)
+       # user.save()
+       # return redirect('login')
+    #return render(request, 'register.html')
 
 
 
@@ -209,6 +90,266 @@ def LOGIN(request):
     return render(request, 'login.html')
 
 
+def calculate_fare(request):
+    places = ['Mumbai, Maharashtra, India',
+                   'Silvassa, Dadra and Nagar Haveli and Daman and Diu, India',
+                   'Vapi, Gujarat, India', 'Valsad, Gujarat, India',
+                   'Navsari, Gujarat, India',
+                   'Surat, Gujarat, India',
+                   'Bharuch, Gujarat, India',
+                   'Ankleshwar, Gujarat, India',
+                   'Vadodara, Gujarat, India',
+                   'Udaipur, Rajasthan, India']
+
+    if request.method == 'POST':
+        source = request.POST.getlist('source')  # Get the source as a string, not a list
+        destination = request.POST.getlist('destination')  # Get the destination as a string, not a list
+        date = request.POST.getlist('date')
+        time = request.POST.getlist('time')
+
+        per_km_price1 = 10
+
+        per_km_price2 = 12
+
+        per_km_price3 = 14
+
+        per_km_price4 = 15
+
+
+        distance = calculate_distance(source, destination)
+        toll_tax = distance
+
+        base_fare1 = distance * per_km_price1 + toll_tax
+        base_fare2 = distance * per_km_price2 + toll_tax
+        base_fare3 = distance * per_km_price3 + toll_tax
+        base_fare4 = distance * per_km_price4 + toll_tax
+
+        if any(place in source for place in places) and any(place in destination for place in places):
+            base_fare1 = base_fare1
+            base_fare2 = base_fare2
+            base_fare3 = base_fare3
+            base_fare4 = base_fare4 # Base fare when both source and destination are in the array
+        elif any(place in source for place in places) or any(place in destination for place in places):
+            base_fare1 += 1500
+            base_fare2 += 1500
+            base_fare3 += 1500
+            base_fare4 += 1500 # Base fare + additional fare when either source or destination is in the array
+        else:
+            base_fare1 += 3000
+            base_fare2 += 3000
+            base_fare3 += 3000
+            base_fare4 += 3000  # Base fare + additional fare when neither source nor destination is in the array
+
+        gst1 = base_fare1 * 0.05  # Add 5% GST amount
+        gst2 = base_fare2 * 0.05
+        gst3 = base_fare3 * 0.05
+        gst4 = base_fare4 * 0.05
+
+        total_fare1 = base_fare1 + gst1
+        total_fare2 = base_fare2 + gst2
+        total_fare3 = base_fare3 + gst3
+        total_fare4 = base_fare4 + gst4 # Add 5% GST amount
+
+        fare1 = total_fare1 * 0.15
+        fare2 = total_fare2 * 0.15
+        fare3 = total_fare3 * 0.15
+        fare4 = total_fare4 * 0.15
+
+        dis_fare1 = fare1 + total_fare1
+        dis_fare2 = fare2 + total_fare2
+        dis_fare3 = fare3 + total_fare3
+        dis_fare4 = fare4 + total_fare4
+
+        distance = round(distance)
+
+        total_fare1 = math.ceil(total_fare1)
+        total_fare2 = math.ceil(total_fare2)
+        total_fare3 = math.ceil(total_fare3)
+        total_fare4 = math.ceil(total_fare4)
+
+        gst1 = math.ceil(gst1)
+        gst2 = math.ceil(gst2)
+        gst3 = math.ceil(gst3)
+        gst4 = math.ceil(gst4)
+
+        base_fare1 = math.ceil(base_fare1)
+        base_fare2 = math.ceil(base_fare2)
+        base_fare3 = math.ceil(base_fare3)
+        base_fare4 = math.ceil(base_fare4)
+
+        dis_fare1 = math.ceil(dis_fare1)
+        dis_fare2 = math.ceil(dis_fare2)
+        dis_fare3 = math.ceil(dis_fare3)
+        dis_fare4 = math.ceil(dis_fare4)
+
+
+
+        context = {
+            'source': source,
+            'destination': destination,
+            'distance': distance,
+            'total_fare1': total_fare1,
+            'total_fare2': total_fare2,
+            'total_fare3': total_fare3,
+            'total_fare4': total_fare4,
+            'date': date,
+            'time': time,
+            'gst1': gst1,
+            'gst2': gst2,
+            'gst3': gst3,
+            'gst4': gst4,
+            'base_fare1': base_fare1,
+            'base_fare2': base_fare2,
+            'base_fare3': base_fare3,
+            'base_fare4': base_fare4,
+            'dis_fare1': dis_fare1,
+            'dis_fare2': dis_fare2,
+            'dis_fare3': dis_fare3,
+            'dis_fare4': dis_fare4,
+        }
+
+        request.session['source'] = source
+        request.session['destination'] = destination
+        request.session['distance'] = distance
+
+        request.session['total_fare1'] = total_fare1
+        request.session['total_fare2'] = total_fare2
+        request.session['total_fare3'] = total_fare3
+        request.session['total_fare4'] = total_fare4
+
+        request.session['date'] = date
+        request.session['time'] = time
+
+        request.session['gst1'] = gst1
+        request.session['gst2'] = gst2
+        request.session['gst3'] = gst3
+        request.session['gst4'] = gst4
+
+        request.session['base_fare1'] = base_fare1
+        request.session['base_fare2'] = base_fare2
+        request.session['base_fare3'] = base_fare3
+        request.session['base_fare4'] = base_fare4
+
+        request.session['dis_fare1'] = dis_fare1
+        request.session['dis_fare2'] = dis_fare2
+        request.session['dis_fare3'] = dis_fare3
+        request.session['dis_fare4'] = dis_fare4
+
+
+        return redirect('cab_list')
+
+    return redirect('index')
+
+
+def CAB(request):
+    car = Cars.objects.all()
+
+    source = request.session.get('source')
+    destination = request.session.get('destination')
+    distance = request.session.get('distance')
+    total_fare1 = request.session.get('total_fare1')
+    total_fare2 = request.session.get ( 'total_fare2' )
+    total_fare3 = request.session.get ( 'total_fare3' )
+    total_fare4 = request.session.get ( 'total_fare4' )
+
+    date = request.session.get('date')
+    time = request.session.get('time')
+
+    gst1 = request.session.get('gst1')
+    gst2 = request.session.get ( 'gst2' )
+    gst3 = request.session.get ( 'gst3' )
+    gst4 = request.session.get ( 'gst4' )
+
+    base_fare1 = request.session.get('base_fare1')
+    base_fare2 = request.session.get ( 'base_fare2' )
+    base_fare3 = request.session.get ( 'base_fare3' )
+    base_fare4 = request.session.get ( 'base_fare4' )
+
+    dis_fare1 = request.session.get('dis_fare1')
+    dis_fare2 = request.session.get ( 'dis_fare2' )
+    dis_fare3 = request.session.get ( 'dis_fare3' )
+    dis_fare4 = request.session.get ( 'dis_fare4' )
+
+    context = {
+        'source': source,
+        'destination': destination,
+        'distance': distance,
+        'total_fare1': total_fare1,
+        'total_fare2': total_fare2,
+        'total_fare3': total_fare3,
+        'total_fare4': total_fare4,
+        'date': date,
+        'time': time,
+        'gst1': gst1,
+        'gst2': gst2,
+        'gst3': gst3,
+        'gst4': gst4,
+
+        'base_fare1': base_fare1,
+        'base_fare2': base_fare2,
+        'base_fare3': base_fare3,
+        'base_fare4': base_fare4,
+
+        'dis_fare1': dis_fare1,
+        'dis_fare2': dis_fare2,
+        'dis_fare3': dis_fare3,
+        'dis_fare4': dis_fare4,
+
+    }
+
+    return render(request, 'cab-list.html', context)
+
+
+
+def CAB_DETAIL(request):
+    if request.method == 'POST':
+
+        form_identifier = request.POST.get('form_identifier')
+
+        if form_identifier == 'form1':
+            base_fare = request.POST.get('base1')
+            gst = request.POST.get('gst1')
+            total_fare = request.POST.get('total1')
+        elif form_identifier == 'form2':
+            base_fare = request.POST.get('base2')
+            gst = request.POST.get('gst2')
+            total_fare = request.POST.get('total2')
+        elif form_identifier == 'form3':
+            base_fare = request.POST.get('base3')
+            gst = request.POST.get('gst3')
+            total_fare = request.POST.get('total3')
+        elif form_identifier == 'form4':
+            base_fare = request.POST.get('base4')
+            gst = request.POST.get('gst4')
+            total_fare = request.POST.get('total4')
+
+
+
+    source = request.session.get('source')
+    destination = request.session.get('destination')
+    distance = request.session.get('distance')
+    #total_fare = request.session.get('total_fare')
+    date = request.session.get('date')
+    time = request.session.get('time')
+    #gst = request.session.get('gst')
+    #base_fare = request.session.get('base_fare')
+
+
+
+    context = {
+        'source': source,
+        'destination': destination,
+        'distance': distance,
+        'total_fare': total_fare,
+        'date': date,
+        'time': time,
+        'gst': gst,
+        'base_fare': base_fare,
+
+    }
+
+    return render(request, 'cab-detail.html', context)
+
 
 
 
@@ -217,12 +358,17 @@ def CAB_BOOKING(request):
     if request.method == "POST":
         pickup_address = request.POST.get('pickup_address')
         drop_address = request.POST.get('drop_address')
+        total = request.POST.get('total')
         name = request.POST.get('name')
         email = request.POST.get('email')
         mobile_b = request.POST.get('mobile_b')
         pickup_city = request.POST.get('pickup_city')
         drop_city = request.POST.get('drop_city')
-        selected_option = request.POST.get('discountOptions')
+        booking_id = request.POST.get('booking_id')
+
+
+
+
 
         en = booking(
 
@@ -232,38 +378,31 @@ def CAB_BOOKING(request):
             pickup_city=pickup_city,
             drop_city=drop_city,
             pickup_address=pickup_address,
-            drop_address=drop_address
+            drop_address=drop_address,
+            booking_id=booking_id
+
         )
         en.save()
+        booking_id = en.booking_id
+
+        total_payment = total
+        payment_amount = 0
+
 
     source = request.session.get('source')
     destination = request.session.get('destination')
     distance = request.session.get('distance')
-    total_fare = request.session.get('total_fare')
+    #total_fare = request.session.get('total_fare')
     date = request.session.get('date')
     time = request.session.get('time')
 
 
-    total_payment = total_fare
-    payment_amount = 0
-
-    if selected_option == 'option1':
-        payment_amount = total_payment * 0.2
-    elif selected_option == 'option2':
-        payment_amount = total_payment
-    else:
-        payment_amount = 0
-
-    payment_amount = math.ceil(payment_amount)
-
-
-    rem_amount = total_payment - payment_amount
 
     context = {
         'source': source,
         'destination': destination,
         'distance': distance,
-        'total_fare': total_fare,
+        'total': total,
         'date': date,
         'time': time,
         'name': name,
@@ -271,22 +410,21 @@ def CAB_BOOKING(request):
         'email': email,
         'pickup_address': pickup_address,
         'drop_address': drop_address,
-        'total_fare': total_fare,
         'payment_amount': payment_amount,
-        'rem_amount': rem_amount
+        'booking_id': booking_id,
+        'total': float(total),
+
+
     }
 
     return render(request, 'cab-booking.html', context)
 
 
+
+
+
 def CONFIRM(request):
    return render(request, 'confirm.html')
-
-
-
-
-
-
 
 
 def PASSWORD(request):
@@ -305,6 +443,73 @@ def otp(request):
 def logout_view(request):
     logout(request)
     return render(request, 'index.html')
+
+
+
+
+
+class OTPView(View):
+    def get(self, request):
+        return render(request, 'register.html')
+
+    def post(self, request):
+        username = request.POST.get('username')
+        mobile = request.POST.get('mobile')
+        email = request.POST.get('email')
+        password = request.POST.get('password') # Specify the desired mobile number here
+        otp = random.randint(100000, 999999)  # Generate OTP here or use a library like `pyotp`
+
+        if User.objects.filter(mobile=mobile).exists():
+            messages.error(request, 'Mobile number is already exists')
+            return redirect('otp')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email is already exists')
+            return redirect('otp')
+
+
+
+
+        user, _ = User.objects.get_or_create(mobile=mobile)
+        user.otp = otp
+        user.username = username
+        user.email = email
+        user.set_password(password)
+        user.save()
+
+        # Send OTP via 2Factor.in API
+        api_key = '2d1d5168-1bb8-11ee-addf-0200cd936042'  # Replace with your 2Factor.in API key
+        url = f"https://2factor.in/API/V1/{api_key}/SMS/{mobile}/{otp}/OTP+is+{otp}"
+        response = requests.get(url)
+
+
+        if response.status_code == 200:
+            return render(request, 'verify_otp.html', {'mobile': mobile})
+        else:
+            return render(request, 'register.html', {'error': 'Failed to send OTP'})
+
+
+class OTPVerificationView(View):
+    def post(self, request):
+        mobile = request.POST.get('mobile')  # Specify the desired mobile number here
+        otp = request.POST.get('otp')
+
+
+        try:
+            user = User.objects.get(mobile=mobile, otp=otp)
+            # Perform further authentication or login logic here
+            user.is_active = True  # Activate the user account
+            user.save()
+
+            user.otp = None
+            user.save(update_fields=['is_active', 'otp'])
+            return render(request, 'login.html')
+        except User.DoesNotExist:
+            return render(request, 'index.html', {'mobile': mobile, 'error': 'Invalid OTP'})
+
+    def get(self, request):
+        return render(request, 'index.html')
+
 
 
 

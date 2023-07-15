@@ -63,6 +63,7 @@ Main Content START -->
 									<ul class="list-group list-group-borderless">
 										<li class="list-group-item">Passengers:<span class="h6 fw-normal mb-0 ms-1">1</span></li>
 										<li class="list-group-item">Luggages:<span class="h6 fw-normal mb-0 ms-1">2</span></li>
+										<li class="list-group-item">Booking Id:<span class="h6 fw-normal mb-0 ms-1">{{booking_id}}</span></li>
 									</ul>
 								</div>
 							</div>
@@ -78,20 +79,21 @@ Main Content START -->
 									</ul>
 								</div>
 								<!-- Price -->
+
 								<div class="col-sm-4 text-sm-end mt-3 mt-sm-auto">
 									<h6 class="mb-1 fw-normal">Total Amount</h6>
-									<h6 class="mb-0 text-success">₹ {{ total_fare }}</h6>
-									<h6 class="mb-1 fw-normal">Total payable Amount</h6>
+									<h6 class="mb-0 text-success" >₹ {{total}}</h6>
+
+									<!--<h6 class="mb-1 fw-normal">Total payable Amount</h6>
 									<h6 class="mb-0 text-success">₹ {{ payment_amount }}</h6>
 									<h6 class="mb-1 fw-normal">Remaining Amount</h6>
-									<h6 class="mb-0 text-danger">₹ {{rem_amount}}</h6>
+									<h6 class="mb-0 text-danger">₹ {{rem_amount}}</h6>-->
 								</div>
 							</div>
-						<form>
-							{% csrf_token %}
-							<div id="price-container">
+
+
 							<div class="form-check form-check-inline mb-0">
-								<input class="form-check-input payment-option" type="radio" name="discountOptions" id="discount2" value="option2" checked>
+								<input class="form-check-input payment-option" type="radio" name="discountOptions" id="discount2" value="option2">
 								<label class="form-check-label h6 fw-normal mb-0" for="discount2">Pay 100% now (Full payment)</label>
 							</div>
 							<br>
@@ -104,11 +106,9 @@ Main Content START -->
 								<input class="form-check-input payment-option" type="radio" name="discountOptions" id="discount3" value="option3">
 								<label class="form-check-label h6 fw-normal mb-0" for="discount3">Pay Cash to driver</label>
 							</div>
+							<button  class="btn btn-primary mb-0" style="float:right;">Pay <span id="payment-amount"></span></button>
 							</div>
-							<div class="col-12">
-						<button  class="btn btn-primary mb-0" style="float:right;">Pay Now</button>
-					</div>
-							</form>
+
 						</div>
 						<!-- Card body END -->
 					</div>
